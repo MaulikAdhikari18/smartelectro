@@ -9,13 +9,16 @@ export default function ProductDetailPage() {
   const router = useRouter();
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState<number>(1);
   const [activeTab, setActiveTab] = useState<'specs' | 'supplier' | 'delivery'>('specs');
   const [addedToCart, setAddedToCart] = useState(false);
 
   useEffect(() => {
     api.get(`/products/${id}`)
-      .then(res => setProduct(res.data))
+      .then(res => {
+        setProduct(res.data);
+        setQuantity(res.data.moq || 1);
+      })
       .catch(() => router.push('/products'))
       .finally(() => setLoading(false));
   }, [id]);
@@ -47,7 +50,7 @@ export default function ProductDetailPage() {
         <div className="rounded-2xl h-96" style={{ background: '#e2e8f0' }} />
         <div className="space-y-4">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="h-5 rounded" style={{ background: '#e2e8f0', width: `${[60,90,50,80,40,70][i]}%` }} />
+            <div key={i} className="h-5 rounded" style={{ background: '#e2e8f0', width: `${[60, 90, 50, 80, 40, 70][i]}%` }} />
           ))}
         </div>
       </div>
@@ -176,8 +179,17 @@ export default function ProductDetailPage() {
               {/* CTAs */}
               <div className="flex gap-3">
                 <button onClick={handleAddToCart}
+                  disabled={quantity < (product.moq || 1)}
                   className="flex-1 py-3.5 rounded-xl font-bold text-base transition-all"
-                  style={{ background: addedToCart ? '#15803d' : 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#0f172a' }}>
+                  style={{
+                    background: quantity < (product.moq || 1)
+                      ? '#e2e8f0'
+                      : addedToCart
+                        ? '#15803d'
+                        : 'linear-gradient(135deg, #f59e0b, #d97706)',
+                    color: quantity < (product.moq || 1) ? '#94a3b8' : '#0f172a',
+                    cursor: quantity < (product.moq || 1) ? 'not-allowed' : 'pointer'
+                  }}>
                   {addedToCart ? '✓ Added to Cart!' : '🛒 Add to Cart'}
                 </button>
                 <Link href="/rfq" className="flex-1 py-3.5 rounded-xl font-bold text-base text-center transition-all"

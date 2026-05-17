@@ -19,22 +19,29 @@ export default function LoginPage() {
       const res = await api.post('/auth/login', form);
       const { token, role, name, userId } = res.data;
 
-      // Check if logged-in role matches selected role
-      if (role !== selectedRole) {
-        setError(`This account is registered as a ${role}. Please select "${role === 'BUYER' ? 'I want to Buy' : 'I want to Sell'}" to continue.`);
-        setLoading(false);
-        return;
-      }
-
       localStorage.setItem('token', token);
       localStorage.setItem('userRole', role);
       localStorage.setItem('userName', name);
       localStorage.setItem('userId', String(userId));
 
       window.dispatchEvent(new Event('storage'));
-      if (role === 'ADMIN') window.location.href = '/admin';
-      else if (role === 'SUPPLIER') window.location.href = '/dashboard';
+
+      // Admin bypasses role toggle completely
+      if (role === 'ADMIN') {
+        window.location.href = '/admin';
+        return;
+      }
+
+      // For buyer/supplier check selected role matches
+      if (role !== selectedRole) {
+        setError(`This account is registered as a ${role}. Please select "${role === 'BUYER' ? 'I want to Buy' : 'I want to Sell'}" to continue.`);
+        setLoading(false);
+        return;
+      }
+
+      if (role === 'SUPPLIER') window.location.href = '/dashboard';
       else window.location.href = '/';
+
     } catch (err: any) {
       setError(err.response?.data || 'Invalid email or password');
     } finally {
