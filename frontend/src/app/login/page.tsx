@@ -32,9 +32,9 @@ export default function LoginPage() {
       localStorage.setItem('userId', String(userId));
 
       window.dispatchEvent(new Event('storage'));
-      if (role === 'ADMIN') router.push('/admin');
-      else if (role === 'SUPPLIER') router.push('/dashboard');
-      else router.push('/');
+      if (role === 'ADMIN') window.location.href = '/admin';
+      else if (role === 'SUPPLIER') window.location.href = '/dashboard';
+      else window.location.href = '/';
     } catch (err: any) {
       setError(err.response?.data || 'Invalid email or password');
     } finally {
