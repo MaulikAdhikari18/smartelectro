@@ -6,6 +6,7 @@ import api from '@/lib/api';
 
 export default function LoginPage() {
   const router = useRouter();
+  const [selectedRole, setSelectedRole] = useState<'BUYER' | 'SUPPLIER'>('BUYER');
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -17,10 +18,19 @@ export default function LoginPage() {
     try {
       const res = await api.post('/auth/login', form);
       const { token, role, name, userId } = res.data;
+
+      // Check if logged-in role matches selected role
+      if (role !== selectedRole) {
+        setError(`This account is registered as a ${role}. Please select "${role === 'BUYER' ? 'I want to Buy' : 'I want to Sell'}" to continue.`);
+        setLoading(false);
+        return;
+      }
+
       localStorage.setItem('token', token);
       localStorage.setItem('userRole', role);
       localStorage.setItem('userName', name);
-      localStorage.setItem('userId', userId);
+      localStorage.setItem('userId', String(userId));
+
       if (role === 'ADMIN') router.push('/admin');
       else if (role === 'SUPPLIER') router.push('/dashboard');
       else router.push('/');
@@ -49,6 +59,31 @@ export default function LoginPage() {
         </div>
 
         <div className="rounded-2xl p-10" style={{ background: '#1e293b', border: '1px solid #334155' }}>
+
+          {/* Role toggle */}
+          <div className="flex rounded-xl p-1.5 mb-8" style={{ background: '#0f172a' }}>
+            {(['BUYER', 'SUPPLIER'] as const).map(r => (
+              <button key={r} type="button"
+                onClick={() => { setSelectedRole(r); setError(''); }}
+                className="flex-1 py-3.5 rounded-lg text-base font-bold transition-all"
+                style={{
+                  background: selectedRole === r ? 'linear-gradient(135deg, #f59e0b, #d97706)' : 'transparent',
+                  color: selectedRole === r ? '#0f172a' : '#64748b'
+                }}>
+                {r === 'BUYER' ? '🛒 Login as Buyer' : '🏭 Login as Supplier'}
+              </button>
+            ))}
+          </div>
+
+          {/* Role description */}
+          <div className="mb-6 px-4 py-3 rounded-xl text-sm"
+            style={{ background: '#0f172a', border: '1px solid #334155' }}>
+            {selectedRole === 'BUYER'
+              ? <p style={{ color: '#94a3b8' }}>🛒 <strong style={{ color: '#f59e0b' }}>Buyer account</strong> — Browse products, post RFQs, place bulk orders</p>
+              : <p style={{ color: '#94a3b8' }}>🏭 <strong style={{ color: '#f59e0b' }}>Supplier account</strong> — Manage products, respond to RFQs, receive orders</p>
+            }
+          </div>
+
           {error && (
             <div className="mb-6 px-5 py-4 rounded-lg text-sm font-medium"
               style={{ background: '#450a0a', border: '1px solid #7f1d1d', color: '#fca5a5' }}>
@@ -90,9 +125,9 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4 rounded-xl font-bold text-lg transition-all mt-2"
+              className="w-full py-4 rounded-xl font-bold text-lg transition-all"
               style={{ background: loading ? '#92400e' : 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#0f172a' }}>
-              {loading ? 'Signing in...' : 'Sign In →'}
+              {loading ? 'Signing in...' : `Sign in as ${selectedRole === 'BUYER' ? 'Buyer' : 'Supplier'} →`}
             </button>
           </form>
 

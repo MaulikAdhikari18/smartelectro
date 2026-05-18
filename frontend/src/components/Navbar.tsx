@@ -83,11 +83,12 @@ export default function Navbar() {
             ))}
 
             {/* Cart */}
-            <Link href="/cart" className="relative flex items-center gap-1.5 text-sm font-medium transition-colors hover:text-amber-400"
-              style={{ color: '#94a3b8' }}>
-              🛒
+            <Link href="/cart" className="relative flex items-center gap-2 font-bold transition-all px-4 py-2 rounded-xl"
+              style={{ background: '#1e293b', color: '#f59e0b', border: '1px solid #334155' }}>
+              <span className="text-xl">🛒</span>
+              <span className="text-sm">Cart</span>
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-3 w-5 h-5 rounded-full text-xs font-black flex items-center justify-center"
+                <span className="w-5 h-5 rounded-full text-xs font-black flex items-center justify-center"
                   style={{ background: '#f59e0b', color: '#0f172a' }}>
                   {cartCount > 9 ? '9+' : cartCount}
                 </span>
