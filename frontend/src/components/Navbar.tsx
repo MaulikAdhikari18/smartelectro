@@ -11,17 +11,23 @@ export default function Navbar() {
   const router = useRouter();
 
   useEffect(() => {
-    const name = localStorage.getItem('userName');
-    const role = localStorage.getItem('userRole');
-    if (name && role) setUser({ name, role });
+    const syncUser = () => {
+      const name = localStorage.getItem('userName');
+      const role = localStorage.getItem('userRole');
+      if (name && role) setUser({ name, role });
+      else setUser(null);
 
-    const updateCart = () => {
       const cart = JSON.parse(localStorage.getItem('cart') || '[]');
       setCartCount(cart.reduce((sum: number, i: any) => sum + i.quantity, 0));
     };
-    updateCart();
-    window.addEventListener('storage', updateCart);
-    return () => window.removeEventListener('storage', updateCart);
+
+    syncUser();
+    window.addEventListener('storage', syncUser);
+    window.addEventListener('focus', syncUser);
+    return () => {
+      window.removeEventListener('storage', syncUser);
+      window.removeEventListener('focus', syncUser);
+    };
   }, []);
 
   const logout = () => {

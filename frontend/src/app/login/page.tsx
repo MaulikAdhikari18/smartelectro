@@ -31,6 +31,7 @@ export default function LoginPage() {
       localStorage.setItem('userName', name);
       localStorage.setItem('userId', String(userId));
 
+      window.dispatchEvent(new Event('storage'));
       if (role === 'ADMIN') router.push('/admin');
       else if (role === 'SUPPLIER') router.push('/dashboard');
       else router.push('/');
