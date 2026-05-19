@@ -65,7 +65,7 @@ export default function Navbar() {
 
           {/* Links */}
           <div className="hidden md:flex items-center gap-6">
-            {[['Products', '/products'], ['Post RFQ', '/rfq'], ['Suppliers', '/suppliers']].map(([label, href]) => (
+            {[['Products', '/products'], ['Post RFQ', '/rfq'], ['Suppliers', '/suppliers'], ['🛒 Cart', '/cart']].map(([label, href]) => (
               <Link key={href} href={href}
                 className="text-sm font-medium transition-colors"
                 style={{ color: '#94a3b8' }}
