@@ -27,90 +27,99 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <nav style={{ background: '#0f172a', borderBottom: '1px solid #1e293b' }} className="sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">SE</span>
+          <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
+            <div className="w-9 h-9 rounded-lg flex items-center justify-center font-black text-sm"
+              style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#0f172a' }}>
+              SE
             </div>
-            <span className="text-xl font-bold text-gray-900">
-              Smart<span className="text-blue-600">Electro</span>
+            <span className="text-xl font-extrabold text-white">
+              Smart<span style={{ color: '#f59e0b' }}>Electro</span>
+              <span className="text-xs font-medium ml-1.5 px-1.5 py-0.5 rounded" style={{ background: '#1e293b', color: '#64748b' }}>B2B</span>
             </span>
           </Link>
 
-          {/* Search bar */}
+          {/* Search */}
           <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-xl mx-8">
-            <div className="flex w-full rounded-lg border border-gray-300 overflow-hidden focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500">
+            <div className="flex w-full rounded-lg overflow-hidden" style={{ border: '1px solid #334155' }}>
               <input
                 type="text"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search products, suppliers, categories..."
-                className="flex-1 px-4 py-2 text-sm outline-none"
+                className="flex-1 px-4 py-2.5 text-sm outline-none text-white"
+                style={{ background: '#1e293b' }}
               />
-              <button type="submit" className="bg-blue-600 text-white px-4 py-2 text-sm font-medium hover:bg-blue-700 transition-colors">
+              <button type="submit" className="px-5 py-2.5 text-sm font-bold transition-colors"
+                style={{ background: '#f59e0b', color: '#0f172a' }}
+                onMouseOver={e => (e.currentTarget.style.background = '#fbbf24')}
+                onMouseOut={e => (e.currentTarget.style.background = '#f59e0b')}>
                 Search
               </button>
             </div>
           </form>
 
-          {/* Nav links */}
+          {/* Links */}
           <div className="hidden md:flex items-center gap-6">
-            <Link href="/products" className="text-sm text-gray-600 hover:text-blue-600 font-medium transition-colors">Products</Link>
-            <Link href="/rfq" className="text-sm text-gray-600 hover:text-blue-600 font-medium transition-colors">Post RFQ</Link>
-            <Link href="/suppliers" className="text-sm text-gray-600 hover:text-blue-600 font-medium transition-colors">Suppliers</Link>
+            {[['Products', '/products'], ['Post RFQ', '/rfq'], ['Suppliers', '/suppliers']].map(([label, href]) => (
+              <Link key={href} href={href}
+                className="text-sm font-medium transition-colors"
+                style={{ color: '#94a3b8' }}
+                onMouseOver={e => (e.currentTarget.style.color = '#f59e0b')}
+                onMouseOut={e => (e.currentTarget.style.color = '#94a3b8')}>
+                {label}
+              </Link>
+            ))}
 
             {user ? (
-              <div className="flex items-center gap-3">
-                <Link href="/dashboard" className="text-sm text-gray-600 hover:text-blue-600 font-medium">
+              <div className="flex items-center gap-4">
+                <Link href="/dashboard" className="text-sm font-medium" style={{ color: '#f59e0b' }}>
                   Hi, {user.name.split(' ')[0]}
                 </Link>
-                <button onClick={logout} className="text-sm text-red-500 hover:text-red-700 font-medium">Logout</button>
+                <button onClick={logout} className="text-sm font-medium" style={{ color: '#ef4444' }}>Logout</button>
               </div>
             ) : (
               <div className="flex items-center gap-3">
-                <Link href="/login" className="text-sm text-gray-600 hover:text-blue-600 font-medium">Login</Link>
-                <Link href="/register" className="btn-primary text-sm py-2 px-4">Register</Link>
+                <Link href="/login" className="text-sm font-medium" style={{ color: '#94a3b8' }}>Login</Link>
+                <Link href="/register" className="btn-primary text-sm py-2 px-5 rounded-lg">Register</Link>
               </div>
             )}
           </div>
 
-          {/* Mobile menu button */}
-          <button className="md:hidden p-2" onClick={() => setMenuOpen(!menuOpen)}>
-            <div className="w-5 h-0.5 bg-gray-600 mb-1"></div>
-            <div className="w-5 h-0.5 bg-gray-600 mb-1"></div>
-            <div className="w-5 h-0.5 bg-gray-600"></div>
+          {/* Mobile toggle */}
+          <button className="md:hidden p-2 flex flex-col gap-1.5" onClick={() => setMenuOpen(!menuOpen)}>
+            <div className="w-5 h-0.5 rounded" style={{ background: '#94a3b8' }}></div>
+            <div className="w-5 h-0.5 rounded" style={{ background: '#94a3b8' }}></div>
+            <div className="w-5 h-0.5 rounded" style={{ background: '#94a3b8' }}></div>
           </button>
         </div>
 
         {/* Mobile menu */}
         {menuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-100 space-y-3">
+          <div className="md:hidden py-4 space-y-3" style={{ borderTop: '1px solid #1e293b' }}>
             <form onSubmit={handleSearch} className="flex gap-2">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                placeholder="Search..."
-                className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg outline-none"
-              />
-              <button type="submit" className="bg-blue-600 text-white px-4 py-2 text-sm rounded-lg">Go</button>
+              <input type="text" value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
+                placeholder="Search..." className="flex-1 px-3 py-2 text-sm rounded-lg text-white outline-none"
+                style={{ background: '#1e293b', border: '1px solid #334155' }} />
+              <button type="submit" className="px-4 py-2 text-sm font-bold rounded-lg"
+                style={{ background: '#f59e0b', color: '#0f172a' }}>Go</button>
             </form>
-            <Link href="/products" className="block text-sm text-gray-600 py-1">Products</Link>
-            <Link href="/rfq" className="block text-sm text-gray-600 py-1">Post RFQ</Link>
-            <Link href="/suppliers" className="block text-sm text-gray-600 py-1">Suppliers</Link>
+            {[['Products', '/products'], ['Post RFQ', '/rfq'], ['Suppliers', '/suppliers']].map(([label, href]) => (
+              <Link key={href} href={href} className="block text-sm py-1" style={{ color: '#94a3b8' }}>{label}</Link>
+            ))}
             {user ? (
               <>
-                <Link href="/dashboard" className="block text-sm text-gray-600 py-1">Dashboard</Link>
-                <button onClick={logout} className="block text-sm text-red-500 py-1">Logout</button>
+                <Link href="/dashboard" className="block text-sm py-1" style={{ color: '#f59e0b' }}>Dashboard</Link>
+                <button onClick={logout} className="block text-sm py-1" style={{ color: '#ef4444' }}>Logout</button>
               </>
             ) : (
               <>
-                <Link href="/login" className="block text-sm text-gray-600 py-1">Login</Link>
-                <Link href="/register" className="block text-sm text-blue-600 py-1 font-medium">Register</Link>
+                <Link href="/login" className="block text-sm py-1" style={{ color: '#94a3b8' }}>Login</Link>
+                <Link href="/register" className="block text-sm py-1 font-bold" style={{ color: '#f59e0b' }}>Register Free →</Link>
               </>
             )}
           </div>

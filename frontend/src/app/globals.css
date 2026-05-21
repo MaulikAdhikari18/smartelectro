@@ -1,40 +1,81 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-:root {
-  --blue: #1a56db;
-  --dark: #0f172a;
+* {
+  box-sizing: border-box;
 }
-
-* { box-sizing: border-box; }
 
 body {
   font-family: 'Inter', sans-serif;
-  background: #f8fafc;
-  color: #0f172a;
+  background: #f0f4f8;
+  color: #1a202c;
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg;
-  }
-  .btn-outline {
-    @apply border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200;
-  }
-  .card {
-    @apply bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200;
-  }
-  .section-title {
-    @apply text-3xl font-bold text-gray-900 mb-2;
-  }
-  .section-subtitle {
-    @apply text-gray-500 text-lg mb-10;
-  }
-  .badge {
-    @apply inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full;
-  }
-  .badge-green { @apply badge bg-green-100 text-green-700; }
-  .badge-blue  { @apply badge bg-blue-100 text-blue-700; }
-  .badge-amber { @apply badge bg-amber-100 text-amber-700; }
+.btn-primary {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #1a202c;
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+  display: inline-block;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(245,158,11,0.4);
 }
+.btn-primary:hover {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(245,158,11,0.5);
+}
+
+.btn-outline {
+  border: 2px solid #f59e0b;
+  color: #f59e0b;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+  display: inline-block;
+  text-align: center;
+}
+.btn-outline:hover {
+  background-color: #f59e0b;
+  color: #1a202c;
+}
+
+.card {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  border: 1px solid #e8edf2;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.card:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+}
+
+.section-title {
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+  color: #64748b;
+  font-size: 1.125rem;
+  margin-bottom: 2.5rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 9999px;
+}
+.badge-green { background: #dcfce7; color: #15803d; }
+.badge-blue  { background: #dbeafe; color: #1d4ed8; }
+.badge-amber { background: #fef3c7; color: #b45309; }
