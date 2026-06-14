@@ -12,12 +12,14 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState<number>(1);
   const [activeTab, setActiveTab] = useState<'specs' | 'supplier' | 'delivery'>('specs');
   const [addedToCart, setAddedToCart] = useState(false);
+  const [activeImage, setActiveImage] = useState(0);
 
   useEffect(() => {
     api.get(`/products/${id}`)
       .then(res => {
         setProduct(res.data);
         setQuantity(res.data.moq || 1);
+        setActiveImage(0);
       })
       .catch(() => router.push('/products'))
       .finally(() => setLoading(false));
@@ -81,21 +83,31 @@ export default function ProductDetailPage() {
       <div className="max-w-7xl mx-auto px-4 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-10">
 
-          {/* ── Left: Images ── */}
+          {/* Left: Images */}
           <div>
-            <div className="rounded-2xl flex items-center justify-center mb-4 overflow-hidden"
+            <div className="rounded-2xl overflow-hidden mb-4"
               style={{ background: 'white', height: '380px', border: '1px solid #e8edf2' }}>
-              <span className="text-9xl">⚡</span>
+              {product.images?.length > 0 ? (
+                <img src={product.images[activeImage ?? 0]} alt={product.name}
+                  className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center">
+                  <span className="text-9xl">⚡</span>
+                </div>
+              )}
             </div>
             {/* Thumbnail row */}
-            <div className="flex gap-3">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="w-20 h-20 rounded-xl flex items-center justify-center cursor-pointer transition-all"
-                  style={{ background: 'white', border: i === 0 ? '2px solid #f59e0b' : '1px solid #e8edf2' }}>
-                  <span className="text-2xl">⚡</span>
-                </div>
-              ))}
-            </div>
+            {product.images?.length > 0 && (
+              <div className="flex gap-3">
+                {product.images.map((img: string, i: number) => (
+                  <div key={i} onClick={() => setActiveImage(i)}
+                    className="w-20 h-20 rounded-xl overflow-hidden cursor-pointer transition-all"
+                    style={{ border: activeImage === i ? '2px solid #f59e0b' : '1px solid #e8edf2' }}>
+                    <img src={img} alt={`View ${i + 1}`} className="w-full h-full object-cover" />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* ── Right: Info ── */}

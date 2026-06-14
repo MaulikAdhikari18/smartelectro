@@ -195,9 +195,15 @@ export default function ProductsPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {products.map((p: any) => (
                   <Link key={p.id} href={`/products/${p.id}`} className="card group overflow-hidden">
-                    <div className="h-44 flex items-center justify-center transition-colors group-hover:bg-amber-50"
+                    <div className="h-44 overflow-hidden transition-colors"
                       style={{ background: '#f8fafc' }}>
-                      <span className="text-6xl">⚡</span>
+                      {p.images?.length > 0 ? (
+                        <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center group-hover:bg-amber-50 transition-colors">
+                          <span className="text-6xl">⚡</span>
+                        </div>
+                      )}
                     </div>
                     <div className="p-5">
                       <div className="flex items-center gap-2 mb-2">
