@@ -23,8 +23,7 @@ export default function RegisterPage() {
       localStorage.setItem('userRole', role);
       localStorage.setItem('userName', name);
       localStorage.setItem('userId', userId);
-      if (role === 'SUPPLIER') router.push('/dashboard');
-      else router.push('/');
+      router.push('/login');
     } catch (err: any) {
       setError(err.response?.data || 'Registration failed. Try again.');
     } finally {
@@ -35,7 +34,7 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-16"
       style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)' }}>
-      <div className="w-full max-w-lg">
+      <div className="w-full max-w-2xl">
 
         {/* Logo */}
         <div className="text-center mb-8">

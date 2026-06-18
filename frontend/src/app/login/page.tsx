@@ -36,7 +36,7 @@ export default function LoginPage() {
       style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)' }}>
 
       {/* Card */}
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-xl">
         {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2.5 mb-6">
