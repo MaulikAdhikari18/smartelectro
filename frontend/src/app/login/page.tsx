@@ -35,37 +35,37 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center px-4 py-16"
       style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)' }}>
 
-      {/* Card */}
-      <div className="w-full max-w-xl">
+      <div className="w-full max-w-2xl">
+
         {/* Logo */}
-        <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2.5 mb-6">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center font-black"
+        <div className="text-center mb-10">
+          <Link href="/" className="inline-flex items-center gap-3 mb-6">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center font-black text-base"
               style={{ background: 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#0f172a' }}>SE</div>
-            <span className="text-2xl font-extrabold text-white">Smart<span style={{ color: '#f59e0b' }}>Electro</span></span>
+            <span className="text-3xl font-extrabold text-white">Smart<span style={{ color: '#f59e0b' }}>Electro</span></span>
           </Link>
-          <h1 className="text-3xl font-bold text-white mb-2">Welcome back</h1>
-          <p style={{ color: '#64748b' }}>Sign in to your B2B account</p>
+          <h1 className="text-4xl font-bold text-white mb-3">Welcome back</h1>
+          <p className="text-lg" style={{ color: '#64748b' }}>Sign in to your B2B account</p>
         </div>
 
-        <div className="rounded-2xl p-8" style={{ background: '#1e293b', border: '1px solid #334155' }}>
+        <div className="rounded-2xl p-10" style={{ background: '#1e293b', border: '1px solid #334155' }}>
           {error && (
-            <div className="mb-5 px-4 py-3 rounded-lg text-sm font-medium"
+            <div className="mb-6 px-5 py-4 rounded-lg text-sm font-medium"
               style={{ background: '#450a0a', border: '1px solid #7f1d1d', color: '#fca5a5' }}>
               ⚠️ {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium mb-2" style={{ color: '#94a3b8' }}>Email Address</label>
+              <label className="block text-base font-medium mb-2.5" style={{ color: '#94a3b8' }}>Email Address</label>
               <input
                 type="email"
                 required
                 value={form.email}
                 onChange={e => setForm({ ...form, email: e.target.value })}
                 placeholder="you@company.com"
-                className="w-full px-4 py-3 rounded-xl text-white text-sm outline-none transition-all"
+                className="w-full px-5 py-4 rounded-xl text-white text-base outline-none transition-all"
                 style={{ background: '#0f172a', border: '1px solid #334155', color: 'white' }}
                 onFocus={e => (e.target.style.borderColor = '#f59e0b')}
                 onBlur={e => (e.target.style.borderColor = '#334155')}
@@ -73,14 +73,14 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2" style={{ color: '#94a3b8' }}>Password</label>
+              <label className="block text-base font-medium mb-2.5" style={{ color: '#94a3b8' }}>Password</label>
               <input
                 type="password"
                 required
                 value={form.password}
                 onChange={e => setForm({ ...form, password: e.target.value })}
                 placeholder="••••••••"
-                className="w-full px-4 py-3 rounded-xl text-white text-sm outline-none transition-all"
+                className="w-full px-5 py-4 rounded-xl text-white text-base outline-none transition-all"
                 style={{ background: '#0f172a', border: '1px solid #334155' }}
                 onFocus={e => (e.target.style.borderColor = '#f59e0b')}
                 onBlur={e => (e.target.style.borderColor = '#334155')}
@@ -90,13 +90,13 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3.5 rounded-xl font-bold text-base transition-all"
+              className="w-full py-4 rounded-xl font-bold text-lg transition-all mt-2"
               style={{ background: loading ? '#92400e' : 'linear-gradient(135deg, #f59e0b, #d97706)', color: '#0f172a' }}>
               {loading ? 'Signing in...' : 'Sign In →'}
             </button>
           </form>
 
-          <div className="mt-6 text-center text-sm" style={{ color: '#64748b' }}>
+          <div className="mt-8 text-center text-base" style={{ color: '#64748b' }}>
             Don't have an account?{' '}
             <Link href="/register" className="font-semibold hover:underline" style={{ color: '#f59e0b' }}>
               Register free
@@ -104,8 +104,7 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Trust note */}
-        <p className="text-center text-xs mt-6" style={{ color: '#475569' }}>
+        <p className="text-center text-sm mt-6" style={{ color: '#475569' }}>
           🔒 Secure login · GST Verified Platform · 25,000+ B2B Buyers
         </p>
       </div>
