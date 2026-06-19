@@ -1,6 +1,7 @@
 package com.smartelectro.service;
 
 import com.smartelectro.model.Product;
+import com.smartelectro.model.Supplier;
 import com.smartelectro.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final SupplierService supplierService;
 
     public List<Product> getAll() {
         return productRepository.findAll();
@@ -42,6 +44,12 @@ public class ProductService {
     }
 
     public Product create(Product product) {
+        // Auto-link to the logged-in supplier
+        try {
+            Supplier supplier = supplierService.getCurrentSupplier();
+            product.setSupplier(supplier);
+        } catch (Exception ignored) {}
+        product.setActive(true);
         return productRepository.save(product);
     }
 
